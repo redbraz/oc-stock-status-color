@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+	<id>Stock Status color</id>
+	<version>1.0</version>
+	<author>REDS</author>
+	
+	<file path="catalog/view/theme/*/template/product/product.twig">
+		<operation>
+			<search><![CDATA[<li>{{ text_stock }} {{ stock }}</li>]]></search>
+			<add position="replace"><![CDATA[
+				{% if (product_info['quantity'] <= 0) %} 
+        <li>{{ text_stock }} <span class="label label-danger">{{ stock }}</span></li>
+        {% elseif (product_info['quantity'] <= 5) %} 
+        <li>{{ text_stock }} <span class="label label-warning">{{ stock }}</span></li>
+        {% else %} 
+        <li>{{ text_stock }} <span class="label label-success">{{ stock }}</span></li>
+        {% endif %} 
+			]]></add>
+		</operation>
+	</file>
+	
+	<file path="catalog/controller/product/product.php">
+		<operation>
+			<search><![CDATA[if ($product_info['quantity'] <= 0) {]]></search>
+			<add position="after"><![CDATA[$data['product'] = $product_info['quantity'];]]></add>
+		</operation>
+		<operation>
+			<search><![CDATA[$product_info = $this->model_catalog_product->getProduct($product_id);]]></search>
+			<add position="after"><![CDATA[$data['product_info'] = $product_info;]]></add>
+		</operation>
+	</file>
+</modification>
