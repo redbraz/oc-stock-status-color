@@ -1,20 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <modification>
-	<id>Stock Status color</id>
+	<name>Stock Status Color</name>
+  <code>stock-status-color</code>
 	<version>1.0</version>
 	<author>REDS</author>
+	<link>https://www.agenciaprai.com/</link>
 	
 	<file path="catalog/view/theme/*/template/product/product.twig">
-		<operation>
+		<operation info="Adicione a label contando o valor em estoque de 0, 5 e mais itens">
 			<search><![CDATA[<li>{{ text_stock }} {{ stock }}</li>]]></search>
 			<add position="replace"><![CDATA[
-				{% if (product_info['quantity'] <= 0) %} 
-        <li>{{ text_stock }} <span class="label label-danger">{{ stock }}</span></li>
-        {% elseif (product_info['quantity'] <= 5) %} 
-        <li>{{ text_stock }} <span class="label label-warning">{{ stock }}</span></li>
-        {% else %} 
-        <li>{{ text_stock }} <span class="label label-success">{{ stock }}</span></li>
-        {% endif %} 
+				<li>{{ text_stock }} <span class="label {% if (product_info['quantity'] <= 0) %}label-danger{% elseif (product_info['quantity'] <= 5) %}label-warning{% else %}label-success{% endif %}">{{ stock }}</span></li> 
 			]]></add>
 		</operation>
 	</file>
